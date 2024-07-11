@@ -7,10 +7,11 @@
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
-          "style": "scss",
+          "style": "less",
           "skipTests": true,
           "standalone": true,
           "inlineStyle": true,
+          "displayBlock": true,
           "changeDetection": "OnPush"
         }
       },
@@ -31,9 +32,15 @@
             "inlineStyleLanguage": "scss",
             "assets": [
               "projects/present/src/favicon.ico",
-              "projects/present/src/assets"
+              "projects/present/src/assets",
+              {
+                "glob": "**/*",
+                "input": "./node_modules/@ant-design/icons-angular/src/inline-svg/",
+                "output": "/assets/"
+              }
             ],
             "styles": [
+              "projects/present/src/theme.less",
               "projects/present/src/styles.scss"
             ],
             "scripts": []
