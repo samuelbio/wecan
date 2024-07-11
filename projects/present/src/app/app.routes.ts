@@ -9,5 +9,5 @@ export const routes: Routes = [
       { path: 'welcome', loadChildren: () => import('./feature/welcome/welcome.routes') }
     ]
   },
-  { path: 'login', loadChildren: () => import('./feature/auth/auth.routes') }
+  { path: 'auth', loadChildren: () => import('./feature/auth/auth.routes') }
 ];
