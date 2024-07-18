@@ -1,2 +1,32 @@
-<p>login works!</p>
-<wc-card></wc-card>
+<ng-container>
+  <div class="text-center mt-4">
+    <h2 class="title m-0">Welcome back</h2>
+    <p class="body-2 text-secondary m-0">
+      Connectez-vous avec vos identifiants ci-dessous.
+    </p>
+  </div>
+  <form nz-form [formGroup]="form" (ngSubmit)="submitForm()">
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your username!">
+        <nz-input-group nzPrefixIcon="user">
+          <input type="text" nz-input formControlName="email" placeholder="Email" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <nz-form-item>
+      <nz-form-control nzErrorTip="Please input your Password!">
+        <nz-input-group nzPrefixIcon="lock">
+          <input type="password" nz-input formControlName="password" placeholder="Password" />
+        </nz-input-group>
+      </nz-form-control>
+    </nz-form-item>
+    <div nz-row nzJustify="end" class="login-form-margin">
+      <div nz-col [nzSpan]="12">
+        <a class="login-form-forgot" [routerLink]="['/auth/forgot-password']" >Forgot password</a>
+      </div>
+    </div>
+    <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
+            [disabled]="isSubmitted | async"
+    >Log in</button>
+  </form>
+</ng-container>
