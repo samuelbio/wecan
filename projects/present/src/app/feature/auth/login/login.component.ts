@@ -1,17 +1,23 @@
 import {ChangeDetectionStrategy, Component, inject} from '@angular/core';
 import {NzFormModule} from "ng-zorro-antd/form";
 import {NzInputModule} from "ng-zorro-antd/input";
-import {FormControl, FormGroup, NonNullableFormBuilder, ReactiveFormsModule, Validators} from "@angular/forms";
+import {
+  FormControl,
+  FormGroup,
+  NonNullableFormBuilder,
+  ReactiveFormsModule,
+  Validators
+} from "@angular/forms";
 import {RouterModule} from "@angular/router";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {NzButtonModule} from "ng-zorro-antd/button";
-import {Store} from "@ngrx/store";
 import {authActions} from "../state-auth/actions";
 import {LoginRequestInterface} from "../types/loginRequest.interface";
 import {selectIsLoading, selectIsSubmitted} from "../state-auth/reducers";
 import {Observable} from "rxjs";
 import {AsyncPipe, JsonPipe} from "@angular/common";
+import {Store} from "@ngrx/store";
 
 @Component({
   selector: 'wc-login',

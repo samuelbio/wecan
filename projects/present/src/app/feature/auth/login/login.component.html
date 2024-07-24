@@ -27,6 +27,7 @@
     </div>
     <button nz-button class="login-form-button login-form-margin" [nzType]="'primary'"
             [disabled]="isSubmitted | async"
+            [nzLoading]="isLoading | async"
     >Log in</button>
   </form>
 </ng-container>

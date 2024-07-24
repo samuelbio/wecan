@@ -8,6 +8,7 @@ import { registerLocaleData } from '@angular/common';
 import fr from '@angular/common/locales/fr';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideStoreDevtools } from '@ngrx/store-devtools';
+import { provideEffects } from '@ngrx/effects';
 
 registerLocaleData(fr);
 
@@ -17,6 +18,7 @@ export const appConfig: ApplicationConfig = {
     provideNzIcons(),
     provideNzI18n(fr_FR),
     provideAnimationsAsync(),
-    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() })
+    provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
+    provideEffects()
 ]
 };
