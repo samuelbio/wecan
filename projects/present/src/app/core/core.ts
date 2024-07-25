@@ -5,6 +5,8 @@ import {provideAnimationsAsync} from "@angular/platform-browser/animations/async
 import {FormsModule} from "@angular/forms";
 import {provideStore} from "@ngrx/store";
 import {provideStoreDevtools} from "@ngrx/store-devtools";
+import {AuthGateway} from "./ports/auth.gateway";
+import {InMemoryAuthGateway} from "./adapters/in-memory-auth.gateway";
 
 export interface CoreOptions {
   routes: Routes
@@ -37,7 +39,15 @@ export function provideCore({ routes }: CoreOptions) {
        autoPause: true,
        trace: false,
        traceLimit: 75,
-     })
+     }),
+     {
+       provide: AuthGateway,
+       useFactory: () => new InMemoryAuthGateway().withUser({
+         email: 'samuel.bio@gmail.com',
+         firstName: 'Samuel',
+         lastName: 'Bio',
+       })
+     }
    ]
 }
 
