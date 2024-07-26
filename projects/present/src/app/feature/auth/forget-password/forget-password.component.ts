@@ -60,7 +60,6 @@ export class ForgetPasswordComponent {
     const request: ForgotPasswordRequestInterface = {
       user: {...this.forgetPasswordForm.getRawValue()}
     }
-
     return this.#store.dispatch(authActions.forgotPassword({request}))
   }
 }

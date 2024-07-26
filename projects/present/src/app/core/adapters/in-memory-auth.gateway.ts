@@ -1,4 +1,4 @@
-import {delay, Observable, of} from "rxjs";
+import {delay, map, Observable, of, switchMap, throwError} from "rxjs";
 import { CurrentUserInterface } from "../auth/types/currentUser.interface";
 import {AuthGateway} from "../ports/auth.gateway";
 
@@ -11,17 +11,29 @@ export class InMemoryAuthGateway extends AuthGateway {
     }
 
     override login(email: string, password: string): Observable<CurrentUserInterface> {
-      if (password === '123456') {
-        throw 'Passwords do not match';
-      }
-      return of(this.user).pipe(delay(1000));
+      return of(password).pipe(
+        delay(1000),
+        switchMap((password) => {
+          return '123456' === password
+            ? throwError(() => ({
+              email: 'Passwords do not match'
+            }))
+            : of(this.user)
+        })
+      )
     }
 
     override resetPassword(email: string): Observable<null> {
-      if (this.user.email !== email) {
-        throw 'Email is not exist';
-      }
-      return of(null);
+      return of(email).pipe(
+        delay(1000),
+        switchMap((email) => {
+          return this.user.email !== email
+            ? throwError(() => ({
+              email: 'Email does not exists'
+            }))
+            : of(null)
+        })
+      )
     }
 
 }

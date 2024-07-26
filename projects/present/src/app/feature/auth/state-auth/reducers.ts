@@ -20,6 +20,7 @@ const authFeature = createFeature({
     })),
     on(authActions.loginSuccess, (state: AuthStateInterface, {currentUser}): AuthStateInterface => ({
       ...state,
+      isSubmitted: false,
       isLoading: false,
       currentUser,
       validationErrors: null
@@ -41,12 +42,15 @@ const authFeature = createFeature({
       isSubmitted: false,
       validationErrors: null
     })),
-    on(authActions.forgotPasswordFailure, (state: AuthStateInterface, {errors}): AuthStateInterface => ({
-      ...state,
-      isLoading: false,
-      isSubmitted: false,
-      validationErrors: errors
-    }))
+    on(authActions.forgotPasswordFailure, (state: AuthStateInterface, {errors}): AuthStateInterface => {
+      console.log(errors)
+      return  {
+        ...state,
+        isLoading: false,
+        isSubmitted: false,
+        validationErrors: errors
+      }
+    })
   ),
 })
 

@@ -15,26 +15,28 @@ export const loginEffect = createEffect(
       ofType(authActions.login),
       switchMap(({request}) => authService
         .login(request.user.email, request.user.password)
-      ),
-      map((currentUser) => authActions.loginSuccess({currentUser})),
-      catchError((error) => of(authActions.loginFailure({errors: {httpError: error}})))
+        .pipe(
+          map((currentUser) => authActions.loginSuccess({currentUser})),
+          catchError((error) => of(authActions.loginFailure({errors: {httpError: error}})))
+        )
+      )
     )
   },
   {functional: true}
 )
 
-export const redirectAfterLoginEffect = createEffect(
-  (
-    actions$ = inject(Actions),
-    router = inject(Router)
-    ) => {
-    return actions$.pipe(
-      ofType(authActions.loginSuccess),
-      tap(() => router.navigateByUrl('/'))
-    )
-  },
-  {functional: true, dispatch: false}
-)
+// export const redirectAfterLoginEffect = createEffect(
+//   (
+//     actions$ = inject(Actions),
+//     router = inject(Router)
+//     ) => {
+//     return actions$.pipe(
+//       ofType(authActions.loginSuccess),
+//       tap(() => router.navigateByUrl('/'))
+//     )
+//   },
+//   {functional: true, dispatch: false}
+// )
 
 
 export const forgotPasswordEffect = createEffect(
@@ -44,9 +46,12 @@ export const forgotPasswordEffect = createEffect(
   ) => {
     return actions$.pipe(
       ofType(authActions.forgotPassword),
-      switchMap(({request}) => authService.resetPassword(request.user.email)),
-      map(() => authActions.forgotPasswordSuccess()),
-      catchError((error) => of(authActions.forgotPasswordFailure({errors: error})))
+      switchMap(({request}) => {
+        return authService.resetPassword(request.user.email).pipe(
+          map(() => authActions.forgotPasswordSuccess()),
+          catchError((error) =>  of(authActions.forgotPasswordFailure({errors: error})))
+        )
+      })
     )
   },
   {functional: true}
