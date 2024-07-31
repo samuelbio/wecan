@@ -25,18 +25,18 @@ export const loginEffect = createEffect(
   {functional: true}
 )
 
-// export const redirectAfterLoginEffect = createEffect(
-//   (
-//     actions$ = inject(Actions),
-//     router = inject(Router)
-//     ) => {
-//     return actions$.pipe(
-//       ofType(authActions.loginSuccess),
-//       tap(() => router.navigateByUrl('/'))
-//     )
-//   },
-//   {functional: true, dispatch: false}
-// )
+export const redirectAfterLoginEffect = createEffect(
+  (
+    actions$ = inject(Actions),
+    router = inject(Router)
+    ) => {
+    return actions$.pipe(
+      ofType(authActions.loginSuccess),
+      tap(() => router.navigateByUrl('/'))
+    )
+  },
+  {functional: true, dispatch: false}
+)
 
 
 export const forgotPasswordEffect = createEffect(
