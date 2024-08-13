@@ -1,5 +1,5 @@
 import {createFeature, createReducer, on} from "@ngrx/store";
-import {AuthStateInterface} from "../types/auth-state.interface";
+import {AuthStateInterface} from "../models/auth-state.interface";
 import {authActions} from "./actions";
 
 const initialState: AuthStateInterface = {
@@ -43,7 +43,6 @@ const authFeature = createFeature({
       validationErrors: null
     })),
     on(authActions.forgotPasswordFailure, (state: AuthStateInterface, {errors}): AuthStateInterface => {
-      console.log(errors)
       return  {
         ...state,
         isLoading: false,

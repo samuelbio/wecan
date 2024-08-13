@@ -4,7 +4,7 @@ import {CardComponent} from "../../../ui/card/card.component";
 import {NzFormModule} from "ng-zorro-antd/form";
 import {Store} from "@ngrx/store";
 import {authActions} from "../state-auth/actions";
-import {ForgotPasswordRequestInterface} from "../types/forgotPasswordRequest.interface";
+import {ForgotPasswordRequestInterface} from "../models/forgotPasswordRequest.interface";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzInputModule} from "ng-zorro-antd/input";

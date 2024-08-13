@@ -1,0 +1,41 @@
+
+<div nz-row nzJustify="end">
+  <button nz-button nzType="primary" type="button" class="send rounded" (click)="createUser()">
+    <i nz-icon nzType="plus"></i>
+    Ajouter
+  </button>
+</div>
+
+<ng-container *ngIf="users$ | async as users">
+  <nz-table #nzTable [nzData]="users">
+    <thead>
+    <tr>
+      <th>Nom</th>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Action</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of nzTable.data">
+      <td>
+        <nz-avatar nzIcon="user"></nz-avatar>
+        {{ data?.firstName }} {{ data?.lastName }}</td>
+      <td>{{ data?.email }}</td>
+      <td>
+        <nz-tag *ngIf="(data.role | userRole) as role" [nzColor]="role.color">
+          {{ role.label }}
+        </nz-tag>
+      </td>
+      <td>
+        <wc-user-list-actions
+          (delete)="delete(data.id!)"
+          (send)="sendEmail(data.email)"
+          (edit)="edit(data)"
+        />
+      </td>
+    </tr>
+    </tbody>
+  </nz-table>
+</ng-container>
+

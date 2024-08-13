@@ -13,7 +13,7 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzCheckboxModule} from "ng-zorro-antd/checkbox";
 import {NzButtonModule} from "ng-zorro-antd/button";
 import {authActions} from "../state-auth/actions";
-import {LoginRequestInterface} from "../types/loginRequest.interface";
+import {LoginRequestInterface} from "../models/loginRequest.interface";
 import {selectIsLoading, selectIsSubmitted} from "../state-auth/reducers";
 import {Observable} from "rxjs";
 import {AsyncPipe, JsonPipe} from "@angular/common";

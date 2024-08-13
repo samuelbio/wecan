@@ -1,6 +1,6 @@
 import {delay, map, Observable, of, switchMap, throwError} from "rxjs";
-import { CurrentUserInterface } from "../auth/types/currentUser.interface";
-import {AuthGateway} from "../ports/auth.gateway";
+import { CurrentUserInterface } from "./types/currentUser.interface";
+import {AuthGateway} from "./auth.gateway";
 
 export class InMemoryAuthGateway extends AuthGateway {
     user!: CurrentUserInterface;

@@ -2,22 +2,25 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import {NzContentComponent, NzHeaderComponent, NzLayoutComponent, NzSiderComponent} from "ng-zorro-antd/layout";
 import {NzIconDirective} from "ng-zorro-antd/icon";
 import {NzMenuDirective, NzMenuItemComponent, NzSubMenuComponent} from "ng-zorro-antd/menu";
-import {RouterOutlet} from "@angular/router";
+import {RouterLink, RouterOutlet} from "@angular/router";
+import {NgForOf} from "@angular/common";
 
 @Component({
   selector: 'wc-main-layout',
   standalone: true,
-    imports: [
-        NzContentComponent,
-        NzHeaderComponent,
-        NzIconDirective,
-        NzLayoutComponent,
-        NzMenuDirective,
-        NzMenuItemComponent,
-        NzSiderComponent,
-        NzSubMenuComponent,
-        RouterOutlet
-    ],
+  imports: [
+    NzContentComponent,
+    NzHeaderComponent,
+    NzIconDirective,
+    NzLayoutComponent,
+    NzMenuDirective,
+    NzMenuItemComponent,
+    NzSiderComponent,
+    NzSubMenuComponent,
+    RouterOutlet,
+    RouterLink,
+    NgForOf
+  ],
   templateUrl: './main-layout.component.html',
   styles: `
     :host {
@@ -105,4 +108,42 @@ import {RouterOutlet} from "@angular/router";
 })
 export class MainLayoutComponent {
   isCollapsed = false;
+
+
+  menus: {
+    link: string,
+    icon: string,
+    label: string
+  }[] = [
+    {
+      link: 'dashboard',
+      icon: 'dashboard',
+      label: 'Dashboard'
+    },
+    {
+      link: 'users',
+      icon: 'user',
+      label: 'Utilisateurs'
+    },
+    {
+      link: 'activities',
+      icon: 'user',
+      label: 'Activités'
+    },
+    {
+      link: 'products',
+      icon: 'appstore',
+      label: 'Produits'
+    },
+    {
+      link: 'specialities',
+      icon: 'appstore',
+      label: 'Specialités'
+    },
+    {
+      link: 'comments',
+      icon: 'form',
+      label: 'Commentaires'
+    }
+  ]
 }

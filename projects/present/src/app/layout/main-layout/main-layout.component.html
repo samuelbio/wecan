@@ -3,7 +3,7 @@
             nzCollapsible
             nzWidth="256px"
             nzBreakpoint="md"
-            [(nzCollapsed)]="isCollapsed"
+            [(nzCollapsed)]="isCollapsed"g
             [nzTrigger]="null">
     <div class="sidebar-logo">
       <a href="https://ng.ant.design/" target="_blank">
@@ -12,25 +12,13 @@
       </a>
     </div>
     <ul nz-menu nzTheme="dark" nzMode="inline" [nzInlineCollapsed]="isCollapsed">
-      <li nz-submenu nzOpen nzTitle="Dashboard" nzIcon="dashboard">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a routerLink="/welcome">Welcome</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Monitor</a>
-          </li>
-          <li nz-menu-item nzMatchRouter>
-            <a>Workplace</a>
-          </li>
-        </ul>
-      </li>
-      <li nz-submenu nzOpen nzTitle="Form" nzIcon="form">
-        <ul>
-          <li nz-menu-item nzMatchRouter>
-            <a>Basic Form</a>
-          </li>
-        </ul>
+      <li *ngFor="let menu of menus"
+          nz-menu-item
+          nzMatchRouter
+          [routerLink]="[menu.link]"
+      >
+        <span nz-icon [nzType]="menu.icon"></span>
+        <span>{{menu.label}}</span>
       </li>
     </ul>
   </nz-sider>

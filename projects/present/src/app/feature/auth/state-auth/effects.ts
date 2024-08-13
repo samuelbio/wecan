@@ -4,7 +4,7 @@ import {authActions} from "./actions";
 import {catchError, map, of, switchMap, tap} from "rxjs";
 import {Router} from "@angular/router";
 import {NzNotificationService} from "ng-zorro-antd/notification";
-import {AuthGateway} from "../../../core/ports/auth.gateway";
+import {AuthGateway} from "../../../core/auth/auth.gateway";
 
 export const loginEffect = createEffect(
   (

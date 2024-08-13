@@ -1,8 +1,8 @@
 import {createActionGroup, emptyProps, props} from "@ngrx/store";
-import {LoginRequestInterface} from "../types/loginRequest.interface";
+import {LoginRequestInterface} from "../models/loginRequest.interface";
 import {BackendErrorsInterface} from "../../../core/types/backendError.interface";
 import {CurrentUserInterface} from "../../../core/auth/types/currentUser.interface";
-import {ForgotPasswordRequestInterface} from "../types/forgotPasswordRequest.interface";
+import {ForgotPasswordRequestInterface} from "../models/forgotPasswordRequest.interface";
 
 
 export const authActions = createActionGroup({

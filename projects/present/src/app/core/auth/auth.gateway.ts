@@ -1,5 +1,5 @@
 import {Observable} from "rxjs";
-import {CurrentUserInterface} from "../auth/types/currentUser.interface";
+import {CurrentUserInterface} from "./types/currentUser.interface";
 
 export abstract class AuthGateway {
   abstract login(email: string, password: string): Observable<CurrentUserInterface>;
