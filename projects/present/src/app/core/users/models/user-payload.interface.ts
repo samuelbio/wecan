@@ -1,6 +1,6 @@
 import {User} from "./user.interface";
 
-export type UpdateUserInterface = Omit<
+export type UserPayloadInterface = Omit<
   User,
   'id'
   | 'uid'

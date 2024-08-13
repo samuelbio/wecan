@@ -5,8 +5,6 @@ import {usersActions} from "./actions";
 const initialSate: UsersStateInterface = {
   isLoading: true,
   users: [],
-  userSelected: null,
-  userFormValue: null,
   userId: null,
   validationErrors: null
 }
@@ -21,10 +19,14 @@ const usersFeature = createFeature({
       isLoading: false,
       users
     })),
-    on(usersActions.updateUser, (state: UsersStateInterface, {user}): UsersStateInterface => ({
+    on(usersActions.updateUser, (state: UsersStateInterface): UsersStateInterface => ({
+      ...state,
+      isLoading: true,
+    })),
+    on(usersActions.updateUsersSuccess, (state: UsersStateInterface, {userId, userUpdateRequest}): UsersStateInterface => ({
       ...state,
       isLoading: false,
-      userSelected: user
+      users: state.users.map((userItem) => userItem.id === userId ? {...userItem, ...userUpdateRequest} : userItem)
     })),
     on(usersActions.deleteUser, (state: UsersStateInterface, {userId}): UsersStateInterface => ({
       ...state,
@@ -40,27 +42,17 @@ const usersFeature = createFeature({
       ...state,
       isLoading: true
     })),
-    on(usersActions.updateUserSelected, (state: UsersStateInterface, {userId, userFormValue}): UsersStateInterface => ({
+    on(usersActions.addUserSuccess, (state: UsersStateInterface, {user}): UsersStateInterface => ({
       ...state,
       isLoading: false,
-      userId: userId,
-      userFormValue: userFormValue,
-      users: state.users.map((userItem) => userItem.id === state.userSelected?.id ? {...userItem, ...state.userSelected} : userItem)
-    })),
-    on(usersActions.updateUsersSuccess, (state: UsersStateInterface): UsersStateInterface => ({
-      ...state,
-      isLoading: false,
-      userFormValue: null,
-      userSelected: null,
-      users: state.users.map((userItem) => userItem.id === state.userId ? {...userItem, ...state.userFormValue} : userItem)
-    })),
+      users: [...state.users, user]
+    }))
   )
 })
 
 export const {
   name: usersFeatureKey,
   reducer: usersReducer,
-  selectUserSelected: userSelected,
   selectUsers,
   selectIsLoading,
   selectValidationErrors,

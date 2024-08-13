@@ -11,14 +11,14 @@ import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzMessageModule, NzMessageService} from "ng-zorro-antd/message";
 import {NzTagModule} from "ng-zorro-antd/tag";
 import {UserCreateUpdateComponent} from "../user-create-update/user-create-update.component";
-import {filter, Observable, Subject, takeUntil} from "rxjs";
+import {filter, first, Observable, Subject, takeUntil} from "rxjs";
 import {NzAvatarComponent} from "ng-zorro-antd/avatar";
 import {UserRolePipe} from "../../pipe/user-role/user-role.pipe";
 import {User} from "../../../../core/users/models/user.interface";
 import {Store} from "@ngrx/store";
 import {selectUsers} from "../../state-users/reducers";
 import {usersActions} from "../../state-users/actions";
-import {UpdateUserInterface} from "../../../../core/users/models/update-user.interface";
+import {UserPayloadInterface} from "../../../../core/users/models/user-payload.interface";
 
 @Component({
   selector: 'wc-user-list',
@@ -68,39 +68,40 @@ export class UserListComponent implements OnDestroy, OnInit {
   }
 
   createUser() {
-    this.store.dispatch(usersActions.addUser())
     this.modal.create({
       nzTitle: 'Création',
       nzContent: UserCreateUpdateComponent,
     }).afterClose
-      .pipe(
-        takeUntil(this.onDestroy$),
-        filter((result) => !!result),
-      //   switchMap(async (user: User) => {
-      //     const authResult = await this.authservice.createUser(user.email)
-      //     return from([
-      //       this.userService.addUser({...user, uid: authResult.user.uid}),
-      //       this.authservice.resetPassword(user.email)
-      //     ]);
-      // })
-      ).subscribe()
+    .pipe(
+      first()
+    //   switchMap(async (user: User) => {
+    //     const authResult = await this.authservice.createUser(user.email)
+    //     return from([
+    //       this.userService.addUser({...user, uid: authResult.user.uid}),
+    //       this.authservice.resetPassword(user.email)
+    //     ]);
+    // })
+    ).subscribe(({userFormValue}) => {
+      this.store.dispatch(usersActions.addUser({userFormValue}))
+    })
   }
 
   edit(user: User) {
-    this.store.dispatch(usersActions.updateUser({user: user}))
     this.modal.create({
       nzTitle: 'Modification',
       nzContent: UserCreateUpdateComponent,
-    }).afterClose.subscribe()
+      nzData: user
+    }).afterClose.subscribe(({userFormValue}) => {
+      this.store.dispatch(usersActions.updateUser({userId: user.id!, userFormValue}))
+    })
   }
 
   sendEmail(email: string) {
-    this.store.dispatch(usersActions.sendRecoveryPassword())
-    // this.modal.confirm({
-    //   nzTitle: '<i>Voulez vous reinitialiser le mot de passe?</i>',
-    //   nzContent: '<b>Cette action est definitve</b>',
-    //   nzOnOk: async () => await this.authservice.resetPassword(email)
-    // })
+    this.modal.confirm({
+      nzTitle: '<i>Voulez vous reinitialiser le mot de passe?</i>',
+      nzContent: '<b>Cette action est definitve</b>',
+      nzOnOk: () => this.store.dispatch(usersActions.sendRecoveryPassword({email}))
+    })
   }
 
   ngOnDestroy(): void {

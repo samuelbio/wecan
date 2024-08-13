@@ -51,7 +51,7 @@ export function provideCore({ routes }: CoreOptions) {
          new StubUserBuilder().build(),
          new UserBuilder()
            .withId('id-2')
-           .withId('3333-4444-3333-66666')
+           .withUid('3333-4444-3333-66666')
            .withFirstName('Samuel')
            .withLastName('Bio')
            .withRole(Role.SUPERVISOR)

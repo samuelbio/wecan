@@ -1,7 +1,7 @@
 import {createActionGroup, emptyProps, props} from "@ngrx/store";
 import {User} from "../../../core/users/models/user.interface";
 import {BackendErrorsInterface} from "../../../core/types/backendError.interface";
-import {UpdateUserInterface} from "../../../core/users/models/update-user.interface";
+import {UserPayloadInterface} from "../../../core/users/models/user-payload.interface";
 
 
 export const usersActions = createActionGroup({
@@ -11,16 +11,15 @@ export const usersActions = createActionGroup({
     'Get users success': props<{users: User[]}>(),
     'Get users failure': emptyProps(),
 
-    'Add user': emptyProps(),
+    'Add user': props<{userFormValue: UserPayloadInterface}>(),
     'Add user success': props<{user: User}>(),
     'Add user failure': props<{errors: BackendErrorsInterface}>(),
 
-    'Update user': props<{user: User}>(),
-    'Update user selected': props<{userId: string, userFormValue: UpdateUserInterface}>(),
-    'Update users success': emptyProps(),
+    'Update user': props<{userId: string, userFormValue: UserPayloadInterface}>(),
+    'Update users success': props<{userId: string, userUpdateRequest: UserPayloadInterface}>(),
     'Update users failure': props<{errors: BackendErrorsInterface}>(),
 
-    'Send recovery password': emptyProps(),
+    'Send recovery password': props<{email: string}>(),
     'Send recovery password success': emptyProps(),
     'Send recovery password failure': props<{errors: BackendErrorsInterface}>(),
 

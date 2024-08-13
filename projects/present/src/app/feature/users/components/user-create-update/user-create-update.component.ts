@@ -11,15 +11,10 @@ import {NzFormModule} from "ng-zorro-antd/form";
 import {NzGridModule} from "ng-zorro-antd/grid";
 import {NzInputModule} from "ng-zorro-antd/input";
 import {NzSelectModule} from "ng-zorro-antd/select";
-import {AsyncPipe, NgForOf} from "@angular/common";
-import {UserRolePipe} from "../../pipe/user-role/user-role.pipe";
 import {USER_ROLES_DATA} from "../../services/user.mock";
-import {Store} from "@ngrx/store";
-import {selectUsers, userSelected} from "../../state-users/reducers";
-import {tap} from "rxjs";
-import {User} from "../../../../core/users/models/user.interface";
-import {UpdateUserInterface} from "../../../../core/users/models/update-user.interface";
-import {usersActions} from "../../state-users/actions";
+import {NgForOf} from "@angular/common";
+import {UserRolePipe} from "../../pipe/user-role/user-role.pipe";
+import {UserPayloadInterface} from "../../../../core/users/models/user-payload.interface";
 
 @Component({
   selector: 'wc-user-create-update',
@@ -34,25 +29,19 @@ import {usersActions} from "../../state-users/actions";
     NzSelectModule,
     NgForOf,
     UserRolePipe,
-    AsyncPipe,
   ],
   templateUrl: './user-create-update.component.html',
   styles: ''
 })
-export class UserCreateUpdateComponent {
+export class UserCreateUpdateComponent implements OnInit {
+  data = inject(NZ_MODAL_DATA);
   private modal = inject(NzModalRef);
   private fb = inject(FormBuilder);
 
-  private store = inject(Store)
-
-  data$ = this.store.select(userSelected).pipe(tap((user) => {
-    this.setForm(user!)
-  }));
-
-  private userId!: string;
-
   roles = USER_ROLES_DATA
+
   requiredText: string = 'Champ obligatoire';
+
   form: FormGroup = this.fb.group({
     email: ['', [
       Validators.compose([Validators.required, Validators.email]),
@@ -63,17 +52,21 @@ export class UserCreateUpdateComponent {
     role: [this.roles.at(0), [Validators.required]],
   });
 
-
-  setForm(user: User) {
-    this.form.get('email')?.disable();
-    this.form.patchValue(user)
-    this.userId = user.id!;
+  ngOnInit(): void {
+    if (
+      this.data
+      && 'email' in this.data
+      && 'id' in this.data
+    ) {
+      this.form.get('email')?.disable();
+      this.form.patchValue(this.data)
+    }
   }
 
   submitForm() {
     if (this.form.valid) {
-      this.store.dispatch(usersActions.updateUserSelected({userId: this.userId, userFormValue: this.form.value}))
-      this.modal.close()
+      const userFormValue: UserPayloadInterface = this.form.getRawValue()
+      this.modal.close({userFormValue})
     } else {
       Object.values(this.form.controls).forEach(control => {
         if (control.invalid) {

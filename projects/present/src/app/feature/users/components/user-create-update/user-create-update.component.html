@@ -1,38 +1,36 @@
-@if (data$ | async; as user) {
-  <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm()">
-    <nz-form-item>
-      <nz-form-label [nzXs]="24" nzRequired nzFor="firstName">Prénom</nz-form-label>
-      <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
-        <input nz-input formControlName="firstName" id="firstName" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzXs]="24" nzRequired nzFor="lastName">Nom</nz-form-label>
-      <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
-        <input nz-input formControlName="lastName" id="lastName" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
-      <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
-        <input nz-input formControlName="email" id="email" />
-      </nz-form-control>
-    </nz-form-item>
-    <nz-form-item>
-      <nz-form-label [nzXs]="24" nzRequired nzFor="email">Role</nz-form-label>
-      <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
-        <nz-select formControlName="role">
-          <nz-option
-            *ngFor="let item of roles"
-            [nzValue]="item"
-            [nzLabel]="(item | userRole).label"/>
-        </nz-select>
-      </nz-form-control>
-    </nz-form-item>
-  </form>
-  <div *nzModalFooter>
-    <button nz-button nzType="default" (click)="close()">Annuler</button>
-    <button nz-button nzType="primary" (click)="submitForm()">Valider</button>
-  </div>
+<form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm()">
+  <nz-form-item>
+    <nz-form-label [nzXs]="24" nzRequired nzFor="firstName">Prénom</nz-form-label>
+    <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
+      <input nz-input formControlName="firstName" id="firstName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzXs]="24" nzRequired nzFor="lastName">Nom</nz-form-label>
+    <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
+      <input nz-input formControlName="lastName" id="lastName" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzXs]="24" nzRequired nzFor="email">E-mail</nz-form-label>
+    <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
+      <input nz-input formControlName="email" id="email" />
+    </nz-form-control>
+  </nz-form-item>
+  <nz-form-item>
+    <nz-form-label [nzXs]="24" nzRequired nzFor="email">Role</nz-form-label>
+    <nz-form-control [nzXs]="24" [nzErrorTip]="requiredText">
+      <nz-select formControlName="role">
+        <nz-option
+          *ngFor="let item of roles"
+          [nzValue]="item"
+          [nzLabel]="(item | userRole).label"/>
+      </nz-select>
+    </nz-form-control>
+  </nz-form-item>
+</form>
+<div *nzModalFooter>
+  <button nz-button nzType="default" (click)="close()">Annuler</button>
+  <button nz-button nzType="primary" (click)="submitForm()">Valider</button>
+</div>
 
-}

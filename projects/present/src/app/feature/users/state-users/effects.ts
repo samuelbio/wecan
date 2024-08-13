@@ -2,7 +2,7 @@ import {Actions, createEffect, ofType} from "@ngrx/effects";
 import {inject} from "@angular/core";
 import {UserGateway} from "../../../core/users/user.gateway";
 import {usersActions} from "./actions";
-import {catchError, delay, map, of, switchMap} from "rxjs";
+import {catchError, map, of, switchMap} from "rxjs";
 
 
 export const getUsersEffect = createEffect((
@@ -23,6 +23,24 @@ export const getUsersEffect = createEffect((
   {functional: true}
 )
 
+export const createUserEffect = createEffect((
+  (
+    $actions = inject(Actions),
+    userService = inject(UserGateway)
+  ) => {
+    return $actions.pipe(
+      ofType(usersActions.addUser),
+      switchMap(({userFormValue}) => {
+        return userService.createUser(userFormValue).pipe(
+          map((user) => usersActions.addUserSuccess({user})),
+          catchError(() => of(usersActions.addUserFailure))
+        )
+      })
+    )
+  }),
+  {functional: true}
+)
+
 
 export const updateUserEffect = createEffect((
     (
@@ -30,10 +48,10 @@ export const updateUserEffect = createEffect((
       userService = inject(UserGateway)
     ) => {
       return $actions.pipe(
-        ofType(usersActions.updateUserSelected),
+        ofType(usersActions.updateUser),
         switchMap(({userId, userFormValue}) => {
           return userService.updateUser(userId, userFormValue).pipe(
-            map(() => usersActions.updateUsersSuccess()),
+            map(() => usersActions.updateUsersSuccess({userId, userUpdateRequest: userFormValue})),
             catchError(() => of(usersActions.getUsersFailure))
           )
         })
