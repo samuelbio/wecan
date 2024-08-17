@@ -65,7 +65,7 @@ export const successForgotPasswordEffect = createEffect(
     return actions$.pipe(
       ofType(authActions.forgotPasswordSuccess),
       tap(() => {
-        notification.success('Your password reset successully', 'Message has been sent to you for reset passsword')
+        notification.success('Your reset password reset successully', 'Message has been sent to you for reset passsword')
       })
     )
   },
@@ -80,7 +80,7 @@ export const failureForgotPasswordEffect = createEffect(
     return actions$.pipe(
       ofType(authActions.forgotPasswordFailure),
       tap(() => {
-        notification.error('Your password failure', 'Message has not been sent to you for reset passsword')
+        notification.error('Your reset password failure', 'Message has not been sent to you for reset passsword')
       })
     )
   },
